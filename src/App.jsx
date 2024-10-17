@@ -1,4 +1,28 @@
+import { useState } from "react";
+import { nanoid } from 'nanoid';
+
 const App = () => {
+    const [title, setTitle] = useState("")
+    const [tasks, setTasks] = useState([]);
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log(title);
+
+        const newTask = {
+            title: title,
+            isComplete: false,
+            id: nanoid(),
+        };
+
+        // to make temp data
+        const copyTask = [...tasks];
+        copyTask.push(newTask);
+        setTasks(copyTask);
+        console.log(copyTask);
+    }
+    
+    
     return (
         <div className=" border-t-2 w-screen h-screen bg-zinc-800 flex  items-center flex-col">
             <div className="mt-[7%] w-[25%] h-[20%] border rounded-3xl flex justify-around items-center">
@@ -11,15 +35,21 @@ const App = () => {
                 </div>
             </div>
             {/*  */}
-            <form className="w-[25%] flex justify-between px-5 my-[2%]">
+            <form onSubmit={submitHandler} className="w-[25%] flex justify-between px-5 my-[2%]">
                 <input
                     placeholder="write your next task..."
                     className="px-5 py-3 text-yellow-100 outline-none w-[85%] rounded-xl bg-zinc-700 "
                     type="text"
+                    onChange={(e) => {setTitle(e.target.value)}}
                 />
+
+
                 <button className="outline-none text-4xl font-extrabold flex justify-center items-center w-[50px] h-[50px] rounded-full bg-orange-600">
                     <i className="ri-add-fill"></i>
                 </button>
+
+                
+                
             </form>
             {/*  */}
             <ul className="list-none w-[25%] ">
